@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darksbr - Multi-Mode Chatbot</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    select, input[type="text"] {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #chatbox {
+      width: 90%;
+      max-width: 600px;
+      height: 400px;
+      background-color: #222;
+      padding: 10px;
+      overflow-y: scroll;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .msg {
+      margin: 5px 0;
+    }
+    .user {
+      color: #4fc3f7;
+    }
+    .bot {
+      color: #aed581;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Darksbr चैटबॉट
+  </header>
+  <main>
+    <label for="mode">मूड चुनें:</label>
+    <select id="mode">
+      <option value="happy">खुश</option>
+      <option value="romantic">रोमांटिक</option>
+      <option value="dark">डार्क</option>
+      <option value="horny">सेंसुअल</option>
+    </select><div id="chatbox"></div>
+
+<input type="text" id="userInput" placeholder="अपना संदेश लिखें..." />
+<button onclick="sendMessage()">भेजें</button>
+
+  </main>  <script>
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const chatbox = document.getElementById('chatbox');
+      const mode = document.getElementById('mode').value;
+
+      if (!input.value.trim()) return;
+
+      const userMsg = input.value;
+      appendMessage('user', userMsg);
+      input.value = '';
+
+      const response = getBotResponse(mode, userMsg);
+      setTimeout(() => appendMessage('bot', response), 500);
+    }
+
+    function appendMessage(sender, message) {
+      const chatbox = document.getElementById('chatbox');
+      const msg = document.createElement('div');
+      msg.classList.add('msg', sender);
+      msg.textContent = sender === 'user' ? `आप: ${message}` : `Darksbr: ${message}`;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function getBotResponse(mode, userMsg) {
+      switch(mode) {
+        case 'happy':
+          return 'वाह! ये तो कमाल है! आप कैसे हैं आज?';
+        case 'romantic':
+          return 'तुम्हारी बातों में जादू है, कुछ और सुनाऊं?';
+        case 'dark':
+          return 'हर अंधेरे का एक छोर होता है... क्या तुमने उसे देखा है?';
+        case 'horny':
+          return 'चलो थोड़ा करीब आएं... लेकिन ध्यान रहे, बातों की मर्यादा रहे।';
+        default:
+          return 'मुझे समझ नहीं आया, फिर से कहिए।';
+      }
+    }
+  </script></body>
+</html>
